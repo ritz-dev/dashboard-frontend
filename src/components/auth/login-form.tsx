@@ -23,6 +23,7 @@ const LoginForm = () => {
 
 
     function onSubmit({ email, password }: LoginInput) {
+        console.log('working');
         login(
             {
                 email,
