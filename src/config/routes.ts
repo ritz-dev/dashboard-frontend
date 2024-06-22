@@ -5,6 +5,8 @@ export const Routes = {
     register: '/register',
     forgotPassword: '/forgot-password',
     profileUpdate: '/profile-update',
+    verifyEmail: '/verify-email',
+    verifyLicense: 'verify-license',
     shop: {
         ...routesFactory('/shops'),
     },

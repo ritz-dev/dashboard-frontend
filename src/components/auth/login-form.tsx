@@ -23,7 +23,6 @@ const LoginForm = () => {
 
 
     function onSubmit({ email, password }: LoginInput) {
-        console.log('working');
         login(
             {
                 email,
@@ -31,13 +30,17 @@ const LoginForm = () => {
             },
             {
                 onSuccess: (data) => {
+                    console.log(data);
                     if(data?.token) {
                         if (hasAccess(allowedRoles, data?.permissions)) {
+                            console.log("I'm here.");
+
                             setAuthCredentials(data?.token, data?.permissions, data?.role);
                             Router.push(Routes.dashboard);
+                            console.log('work this');
                             return;
                         }
-                        setErrorMessage('no permission');
+                        // setErrorMessage('no permission');
                     } else {
                         setErrorMessage('Credential Wrong');
                     }

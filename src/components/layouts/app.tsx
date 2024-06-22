@@ -9,7 +9,7 @@ export default function AppLayout({
 }: {
     userPermissions: string[];
 }) {
-    if( !userPermissions?.includes(SUPER_ADMIN)) {
+    if(userPermissions?.includes(SUPER_ADMIN)) {
         return <AdminLayout {...props} /> 
     }
     return <div className="text-red-500">NOT FOUND</div>

@@ -100,11 +100,11 @@ export default function AuthorizedMenu () {
                                                             <Link
                                                                 href={href}
                                                                 className={cn(
-                                                                    'group flex items-center gap-2 rounded-md py-2.5 px-3 text-sm capitalize transition duration-200 hover:text-accent',
+                                                                    'group flex items-center gap-2 rounded-md py-2.5 px-3 text-sm capitalize transition duration-200 hover:text-light hover:bg-accent',
                                                                     focus ? 'border-transparent bg-red-500 text-accent' : 'text-heading'
                                                                 )}
                                                             >
-                                                                <span className="text-gray-600 group-hover:text-accent">
+                                                                <span className="text-gray-600 transition duration-200 group-hover:text-light">
                                                                     {getIcon({
                                                                         iconList: sidebarIcons,
                                                                         iconName: icon,

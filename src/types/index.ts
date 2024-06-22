@@ -5,6 +5,13 @@ export type NextPageWithLayout <P = {}> = NextPage<P> & {
     getLayout?: (page: React.ReactElement) => React.ReactNode;
 }
 
+export interface User {
+    id: string;
+    username: string;
+    email: string;
+    role: string;
+}
+
 export interface AuthResponse {
     token: string;
     permissions: string[];

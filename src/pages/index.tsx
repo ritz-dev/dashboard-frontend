@@ -12,12 +12,10 @@ export default function Dashboard({
 } : {
   userPermissions : string[];
 }) {
-  console.log('value',userPermissions)
-
-  if( !userPermissions?.includes(SUPER_ADMIN)) {
+  if(userPermissions?.includes(SUPER_ADMIN)) {
     return <AdminDashboard />;
   }
-  return <div className="text-red-500">Not Found</div>
+  return <div className="text-green-500">Not Found</div>
 }
 
 Dashboard.Layout = AppLayout;

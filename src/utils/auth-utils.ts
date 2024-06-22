@@ -1,8 +1,9 @@
 
-import Cookies from "js-cookie";
+import Cookie from "js-cookie";
 import SSRCookie from 'cookie';
 import { 
     AUTH_CRED, 
+    EMail_VERIFIED, 
     PERMISSIONS, 
     STAFF, 
     STORE_OWNER, 
@@ -17,8 +18,20 @@ export const adminOnly = [SUPER_ADMIN];
 export const ownerOnly = [STORE_OWNER];
 export const ownerAndStaffOnly = [STORE_OWNER,STAFF];
 
+
+export function setEmailVerified(emailVerified: boolean) {
+    Cookie.set(EMail_VERIFIED, JSON.stringify({emailVerified}));
+}
+
+export function getEmailVerified () : {
+    emailVerified: boolean;
+} {
+    const emailVerified = Cookie.get(EMail_VERIFIED);
+    return emailVerified ? JSON.parse(emailVerified) : false;
+}
+
 export function setAuthCredentials (token: string, permissions: any,role: any) {
-    Cookies.set(AUTH_CRED, JSON.stringify({ token, permissions, role}));
+    Cookie.set(AUTH_CRED, JSON.stringify({ token, permissions, role}));
 }
 
 export function getAuthCredentials(context?: any): {
@@ -30,7 +43,7 @@ export function getAuthCredentials(context?: any): {
     if (context) {
         authCred = parseSSRCookie(context)[AUTH_CRED];
     } else {
-        authCred = Cookies.get(AUTH_CRED);
+        authCred = Cookie.get(AUTH_CRED);
     }
 
     if (authCred) {
