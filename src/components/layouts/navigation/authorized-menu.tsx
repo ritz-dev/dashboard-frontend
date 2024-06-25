@@ -1,35 +1,37 @@
 import Avatar from "@/components/common/avatar";
 import { siteSettings } from "@/settings/site.setting";
 import { Menu, MenuButton, MenuItem, MenuItems, Transition } from "@headlessui/react";
-import { Fragment } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import cn from 'classnames';
 import Link from "next/link";
 import { getIcon } from "@/utils/get-icon";
 import * as sidebarIcons from '@/components/icons/sidebar';
+import { getAuthCredentials } from "@/utils/auth-utils";
+import { useRouter } from "next/router";
+import { useMeQuery } from "@/data/user";
 
 export default function AuthorizedMenu () {
-    
-    const data = {
-        name: 'ADMIN',
-        profile: {
-            avatar: {
-                thumbnail: null
-            }
-        },
-        email: ''
-    }
 
-    const role = 'SUPER_ADMIN';
+    const { data } = useMeQuery();
+    const { pathname, query } = useRouter();
+    const { role } = getAuthCredentials();
+
+    const [userRoll,setUserRoll] = useState<string>('');
+
+    useEffect(()=>{
+        if(role){ 
+            setUserRoll(role);
+        }
+    },[role]);
 
     return (
         <Menu
             as="div"
             className="relative inline-block shrink-0 grow-0 basic-auto py-2 text-left ps-1.5 sm:border-solid sm:border-gray-200 sm:py-3 sm:ps-6 sm:border-s lg:py-4 xl:py-2"
         >
-            <MenuButton className="flex max-w-[150px] items-center gap-2 focus:outline-none lg:py-0.5 xl:py:2.5">
+            <MenuButton className="flex max-w-[300px] items-center gap-2 focus:outline-none lg:py-0.5 xl:py:2.5">
                 <Avatar
                     src={
-                        data?.profile?.avatar?.thumbnail ??
                         siteSettings?.avatar?.placeholder
                     }
                     rounded="full"
@@ -38,10 +40,10 @@ export default function AuthorizedMenu () {
                 />        
                 <div className="hidden w-[calc(100%-48px)] flex-col items-start space-y-0.5 truncate text-sm text-left xl:flex">
                     <span className="w-full trancate font-semibold capitalize text-black">
-                        {data ? data.name : "User"}
+                        {data ? data?.full_name : "User"}
                     </span>
                     <span className="w-full truncate text-xs capitalize text-gray-400">
-                        {role ? role.split('_').join(' '): data?.email}
+                        {userRoll.split('_').join(' ')}
                     </span>
                 </div>
             </MenuButton>
@@ -64,7 +66,7 @@ export default function AuthorizedMenu () {
                             <div className="flex items-center gap-2 rounded-md bg-gray-100 px-3 py-2">
                                 <Avatar
                                 src={
-                                    data?.profile?.avatar?.thumbnail ??
+                                    
                                     siteSettings?.avatar?.placeholder
                                 }
                                 name="avatar"
@@ -72,7 +74,7 @@ export default function AuthorizedMenu () {
                                 />
                                 <div className="flex w-[calc(100%-40px)] flex-col items-start space-y-0.5 text-sm">
                                 <span className="w-full truncate font-semibold capitalize text-black">
-                                    {data?.name}
+                                    {data?.full_name}
                                 </span>
                                 <span className="break-all text-xs text-gray-400">
                                     {data?.email}

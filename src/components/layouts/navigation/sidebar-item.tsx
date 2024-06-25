@@ -2,7 +2,7 @@ import { RESPONSIVE_WIDTH } from "@/utils/constants";
 import { useWindowSize } from "react-use";
 import { motion,AnimatePresence } from 'framer-motion';
 import cn from 'classnames';
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 import { useRouter } from "next/router";
 import { getIcon } from "@/utils/get-icon";
 import { getAuthCredentials,hasAccess} from '@/utils/auth-utils';

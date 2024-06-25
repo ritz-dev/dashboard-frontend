@@ -74,7 +74,7 @@ const Navbar = () => {
                         <div className="relative hidden w-full max-w-[710px] py-4 me-6 lg:block 2xl:me-auto">
                             <SearchBar />
                         </div> */}
-                        <div className="fixed right-20">
+                        <div className="fixed right-10">
                             <AuthorizedMenu/>
                         </div>
                     </div>

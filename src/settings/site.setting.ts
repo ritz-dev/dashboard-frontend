@@ -49,13 +49,32 @@ export const siteSettings = {
             href: Routes.dashboard,
             label: 'Main',
             icon: 'DashboardIcon',
-              childMenu: [
-                {
-                  href: Routes.dashboard,
-                  label: 'Dashboard',
-                  icon: 'DashboardIcon'
-                }
-              ]
+            childMenu: [
+              {
+                href: Routes.dashboard,
+                label: 'Dashboard',
+                icon: 'DashboardIcon'
+              }
+            ]
+          },
+          user: {
+            href: '',
+            label: 'user-management',
+            icon: 'CustomersIcon',
+            childMenu:[
+              {
+                href: '',
+                label: 'Users',
+                icon: 'CustomersIcon',
+                childMenu: [
+                  {
+                    herf: Routes.user.list,
+                    label: 'All-user',
+                    icon: 'CustomersIcon',
+                  }
+                ]
+              }
+            ]
           },
           shop: {
             href: '',

@@ -10,6 +10,9 @@ export const Routes = {
     shop: {
         ...routesFactory('/shops'),
     },
+    user: {
+        ...routesFactory('users')
+    },
 };
 
 function routesFactory(endpoint: string) {
