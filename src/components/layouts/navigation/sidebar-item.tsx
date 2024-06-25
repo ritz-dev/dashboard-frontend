@@ -51,13 +51,13 @@ export const SidebarItem = ({
 
     const toggleCollapse = useCallback(()=> {
         setOpen((prevValue) => !prevValue);
-    },[isOpen]);
+    },[]);
 
     const onClick = useCallback(()=>{
         if(Array.isArray(childMenu) && !!childMenu.length){
             toggleCollapse();
         }
-    },[])
+    },[childMenu, toggleCollapse])
 
     return childMenu && childMenu?.length ? (
         miniSidebar && width >= RESPONSIVE_WIDTH ? (

@@ -20,7 +20,7 @@ const PrivateRoute: React.FC<{
         if(!isUser){
             router.replace(Routes.login);
         }
-    },[isUser]);
+    },[isUser, router]);
 
     if(isUser && hasPermission) {
         return <>{children}</>;
