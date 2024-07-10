@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   web:
-    build: .
+    iamge: akayti/next-j
     ports:
       - "3000:3000"
     volumes:
