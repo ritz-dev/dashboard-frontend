@@ -1,8 +1,7 @@
 import Document, { Html, Head, Main, NextScript,DocumentContext } from "next/document";
-import { JSX } from "react/jsx-runtime";
 
 export default class CustomDocument extends Document {
-  static async getInitialProps(ctx: DocumentContext): Promise<DocumentInitialProps> {
+  static async getInitialProps(ctx: DocumentContext){
     return Document.getInitialProps(ctx);  
   }
 
