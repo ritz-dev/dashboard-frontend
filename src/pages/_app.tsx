@@ -23,11 +23,11 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
     <div>
       <QueryClientProvider client={queryClient}>
         { authProps ? (
-          <PrivateRoute authProps={authProps}>
+          // <PrivateRoute authProps={authProps}>
             <Layout>
               <Component {...pageProps} />
             </Layout>
-          </PrivateRoute>
+          // </PrivateRoute>
         ) : (
           <Layout {...pageProps}>
             <Component {...pageProps} />
