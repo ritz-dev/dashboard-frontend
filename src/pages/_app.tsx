@@ -36,7 +36,6 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
             </Layout>
           )}
       </QueryClientProvider>
-    </div>
-    
+    </div> 
   )
 }
