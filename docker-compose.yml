@@ -1,11 +1,12 @@
-version: '3.7'
+version: '3.8'
 
 services:
-  web:
-    iamge: akayti/next-j
+  nextjs-app:
+    container_name: nextjs-app
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "3000:3000"
-    volumes:
-      - .:/app
     environment:
-      - NODE_ENV=production
+      NODE_ENV: production
