@@ -4,6 +4,7 @@ import { NextPageWithLayout } from "@/types";
 import PrivateRoute from "@/utils/private-route";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { useState } from "react";
+import DefaultSeo from "@/components/ui/default-seo";
 
 const Noop: React.FC<{children?: React.ReactNode}> = ({ children }) => (
   <>{children}</>
@@ -22,17 +23,18 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   return (
     <div>
       <QueryClientProvider client={queryClient}>
-        { authProps ? (
-          // <PrivateRoute authProps={authProps}>
-            <Layout>
+        <DefaultSeo/>
+          { authProps ? (
+            <PrivateRoute authProps={authProps}>
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>
+            </PrivateRoute>
+          ) : (
+            <Layout {...pageProps}>
               <Component {...pageProps} />
             </Layout>
-          // </PrivateRoute>
-        ) : (
-          <Layout {...pageProps}>
-            <Component {...pageProps} />
-          </Layout>
-        )}
+          )}
       </QueryClientProvider>
     </div>
     
