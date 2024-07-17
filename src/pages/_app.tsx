@@ -23,7 +23,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   return (
     <div>
       <QueryClientProvider client={queryClient}>
-        <DefaultSeo/>
+        {/* <DefaultSeo/> */}
           { authProps ? (
             <PrivateRoute authProps={authProps}>
               <Layout>
