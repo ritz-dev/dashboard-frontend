@@ -22,6 +22,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   
   return (
     <div>
+      <DefaultSeo/>
       <QueryClientProvider client={queryClient}>
         {/* <DefaultSeo/> */}
           { authProps ? (

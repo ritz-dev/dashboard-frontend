@@ -15,7 +15,6 @@ const PrivateRoute: React.FC<{
     const isUser = !!token;
     const hasPermission = Array.isArray(permissions) && !!permissions.length && hasAccess(authProps.permissions,permissions);
 
-    
     useEffect(()=> {
         if(!isUser){
             router.replace(Routes.login);
