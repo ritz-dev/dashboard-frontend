@@ -16,27 +16,24 @@ module.exports = {
     './app/**/*.{js,ts,tsx}',
     './src/**/*.{js,ts,tsx}',
     './assets/**/*.{js,ts,tsx}'
-],
+  ],
   theme: {
-    screens: {
-      xs: '480px',
-      sm: '640px',
-      md: '768px',
-      lg: '1024px',
-      xl: '1280px',
-      '2xl': '1440px',
-      '3xl': '1780px',
-      '4xl': '2160px', // only need to control product grid mode in ultra 4k device
-    },
     extend: {
+      screens: {
+        '3xl': '1900px',
+      },
       fontFamily: {
-        body: ['Open Sans', 'system-ui', 'sans-serif'],
-        heading: ['Open Sans', 'system-ui', 'sans-serif'],
+        // body: ['Open Sans', 'system-ui', 'sans-serif'],
+        // heading: ['Open Sans', 'system-ui', 'sans-serif'],
+        body: [`Inter, sans-serif`],
+        heading: [`Inter, sans-serif`],
       },
       colors: {
         light: withOpacity('--color-light'),
         dark: withOpacity('--color-dark'),
         accent: withOpacity('--color-accent'),
+        'muted-black': withOpacity('--color-muted-black'),
+        'base-dark': withOpacity('--text-base-dark'),
         'accent-hover': withOpacity('--color-accent-hover'),
         'accent-300': withOpacity('--color-accent-300'),
         'accent-400': withOpacity('--color-accent-400'),
@@ -86,6 +83,7 @@ module.exports = {
           'out-for-delivery': withOpacity('--color-out-for-delivery'),
         },
       },
+
       textColor: {
         body: withOpacity('--text-base'),
         'body-dark': withOpacity('--text-base-dark'),
@@ -109,9 +107,11 @@ module.exports = {
       spacing: {
         22: '5.5rem',
       },
+
       borderRadius: {
         DEFAULT: '5px',
       },
+
       boxShadow: {
         base: 'rgba(0, 0, 0, 0.16) 0px 4px 16px',
         translatePanel: '0px 15px 50px rgba(71, 92, 111, 0.15)',
@@ -120,11 +120,25 @@ module.exports = {
         cardAction:
           '0 0 0 1px #8898aa1a, 0 15px 35px #31315d1a, 0 5px 15px #00000014',
         chat: '0px 1px 2px rgba(0, 0, 0, 0.08)',
+        box: '0 10px 15px -3px rgb(0 0 0 / 0.05), 0 4px 6px -4px rgb(0 0 0 / 0.05)',
         promptSuggestion: '0px 2px 6px rgba(59, 74, 92, 0.1)',
+        avatar: '0px 1px 2px rgba(0, 0, 0, 0.12)',
+        shopLogo: '2px 4px 16px rgba(0, 0, 0, 0.08)',
+      },
+      dropShadow: {
+        shopLogo: '2px 4px 16px rgba(0, 0, 0, 0.08)',
       },
       gridTemplateColumns: {
         fit: 'repeat(auto-fit, minmax(0, 1fr))',
-      },  
+      },
+      fontSize: {
+        h1: 'var(--h1)',
+        h2: 'var(--h2)',
+        h3: 'var(--h3)',
+        h4: 'var(--h4)',
+        h5: 'var(--h5)',
+        h6: 'var(--h6)',
+      },
     },
   },
   plugins: [

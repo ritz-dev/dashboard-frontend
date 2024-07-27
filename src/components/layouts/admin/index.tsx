@@ -2,8 +2,9 @@ import cn from 'classnames';
 import { useWindowSize } from "react-use";
 import { RESPONSIVE_WIDTH } from "@/utils/constants";
 import { siteSettings } from "@/settings/site.setting";
-import { SidebarItem } from '../navigation/sidebar-item';
+import SidebarItem from '../navigation/sidebar-item';
 import Navbar from '../navigation/top-navbar';
+import Scrollbar from '@/components/ui/scrollbar';
 
 interface MenuItemsProps {
     [key: string] : {
@@ -92,10 +93,10 @@ const AdminLayout: React.FC<{ children?: React.ReactNode }> = ({
     const { width } = useWindowSize();
 
     return(
-        <div className="flex min-h-screen flex-col bg-grey-100 transition-colors duration-150">
+        <div className="flex min-h-screen flex-col bg-gray-100 transition-colors duration-150">
             <Navbar/>
             <div className="flex flex-1">
-                <aside className={cn('fixed bottom-0 left-0 z-10 h-full w-72 bg-white shadow transition-[width] duration-300 right-auto lg:block',
+                <aside className={cn('fixed hidden bottom-0 left-0 z-10 h-full w-72 bg-white shadow transition-[width] duration-300 right-auto lg:block',
                     width >= RESPONSIVE_WIDTH && 
                     // (underMaintenance || underMaintenanceStart) ? 'lg:-pt-[8.75rem]':
                     'pt-20',
@@ -103,11 +104,35 @@ const AdminLayout: React.FC<{ children?: React.ReactNode }> = ({
                     'lg:w-76'
                 )}>
                     <div className="sidebar-scrollbar h-full w-full overflow-x-hidden">
-                        <SideBarGroup />
+                        <Scrollbar
+                            className='w-full h-full'
+                            options={{
+                                scrollbars:{
+                                    autoHide: 'never',
+                                },
+                            }}
+                        >
+                            <SideBarGroup />
+                        </Scrollbar>
                     </div>
                 </aside>
+                <main
+                    className={cn(
+                        'relative flex w-full flex-col justify-start transition-[padding] duration-300',
+                        // width >= RESPONSIVE_WIDTH && 
+                        // (underMaintenance || underMaintenanceStart) ? 'lg:pt-[8.75rem]' :
+                        'pt-20',
+                        // miniSidebar && width >= RESPONSIVE_WIDTH ? 'lg:w-24' :
+                        'lg:w-76',
+                        // miniSidebar && width >= RESPONSIVE_WIDTH ? 'lg:pl-24 ' : 
+                        'xl:pl-76 lg:pl-72'
+                    )}
+                >
+                    <div className='h-full p-5 md:p-8'>
+                        {children}
+                    </div>
+                </main>
             </div>
-            {children}
         </div>
     )
 }

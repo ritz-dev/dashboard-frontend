@@ -6,6 +6,8 @@ import { User } from "@/types";
 import { Routes } from "@/config/routes";
 import axios from "axios";
 import { setEmailVerified } from "@/utils/auth-utils";
+import Cookies from "js-cookie";
+import { AUTH_CRED } from "@/utils/constants";
 
 export const useMeQuery = () => {
     const queryClient = useQueryClient();
@@ -44,4 +46,21 @@ export const useMeQuery = () => {
 
 export function useLogin() {
     return useMutation(userClient.login);
+}
+
+export const useLogoutMutation = () => {
+    const router = useRouter();
+
+    return useMutation(userClient.logout, {
+        onSuccess: () => {
+            Cookies.remove(AUTH_CRED);
+            // router.replace(Routes.login);
+            // toast.success('successfully logout', {
+            //     toastId: 'logoutSuccess'
+            // });
+        },
+        onError:(error) => {
+            console.error('Logout failed;', error);
+        }
+    });
 }

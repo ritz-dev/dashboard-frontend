@@ -11,8 +11,11 @@ export const Routes = {
         ...routesFactory('/shops'),
     },
     user: {
-        ...routesFactory('users')
+        ...routesFactory('/users'),
     },
+    role: {
+        ...routesFactory('/roles')
+    }
 };
 
 function routesFactory(endpoint: string) {

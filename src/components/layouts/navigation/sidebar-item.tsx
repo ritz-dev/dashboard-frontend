@@ -2,7 +2,7 @@ import { RESPONSIVE_WIDTH } from "@/utils/constants";
 import { useWindowSize } from "react-use";
 import { motion,AnimatePresence } from 'framer-motion';
 import cn from 'classnames';
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
 import { getIcon } from "@/utils/get-icon";
 import { getAuthCredentials,hasAccess} from '@/utils/auth-utils';
@@ -10,7 +10,7 @@ import * as sidebarIcons from '@/components/icons/sidebar';
 import { ChevronRight } from '@/components/icons/chevron-right';
 import Link from "@/components/ui/link";
 
-export const SidebarItem = ({
+const SidebarItem = ({
     href,
     icon,
     label,
@@ -26,7 +26,6 @@ export const SidebarItem = ({
 
     const router = useRouter();
     const { width } = useWindowSize();
-    const { permissions: currentUserPermission } = getAuthCredentials(); 
 
     const {
         query : {shop},
@@ -37,27 +36,49 @@ export const SidebarItem = ({
     const sanitizedPath = router?.asPath?.split('#')[0]?.split('?')[0];
     const isParents = router?.query?.parents;
 
-    // const isActive = useMemo(() => {
-    //     if (isParents) {
-    //         return isParents === label;
-    //     }
+    const isActive = useMemo(() => {
+        if (isParents) {
+            return isParents === label;
+        }
 
-    //     let lastIndex = router?.asPath.lastIndexOf('/');
-    //     if( label !== 'Sett')
+        let lastIndex = router?.asPath.lastIndexOf('/');
+        if( label !== 'Settings') {
+            return(
+                router.asPath
+                ?.substring(lastIndex + 1)
+                ?.replace(/[^a-zA-z]/g, ' ')
+                ?.trim()
+                ?.toUpperCase() === label?.trim()?.toUpperCase()
+            );
+        }
+        return router?.asPath
+            ?.trim()
+            ?.toUpperCase()
+            ?.includes(label?.trim()?.toUpperCase());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[router?.asPath,isParents]);
 
-    // },[])
+    href = href && href !== '/' && href?.endsWith('/') ? href?.slice(0, -1) : href;
 
-    const [isOpen,setOpen] = useState<boolean>(false);
+    const [isOpen,setOpen] = useState<boolean>(isActive);
+
+    useEffect(()=> {
+        setOpen(isActive);
+    },[isActive]);
 
     const toggleCollapse = useCallback(()=> {
         setOpen((prevValue) => !prevValue);
-    },[]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[isOpen]);
 
     const onClick = useCallback(()=>{
         if(Array.isArray(childMenu) && !!childMenu.length){
             toggleCollapse();
         }
-    },[childMenu, toggleCollapse])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[isOpen]);
+
+    const { permissions: currentUserPermissions } = getAuthCredentials();
 
     return childMenu && childMenu?.length ? (
         miniSidebar && width >= RESPONSIVE_WIDTH ? (
@@ -68,7 +89,7 @@ export const SidebarItem = ({
                     initial={false}
                     className={cn(
                         'group cursor-pointer rounded-md px-3 py-2.5 text-body-dark hover:bg-gray-100 focus:text-accent',
-                        true ? 'bg-gray-100 font-medium' : '',
+                        isOpen ? 'bg-gray-100 font-medium' : '',
                     )}
                     onClick={onClick}
                 >
@@ -117,7 +138,7 @@ export const SidebarItem = ({
                             <div className="pt-2 pl-5">
                                 <div className="space-y-1 border-0 border-l border-dashed border-slate-300 pl-1">
                                     {childMenu?.map((item: any, index: number) => {
-                                        if( shop && !hasAccess(item?.permissions, currentUserPermission))
+                                        if( shop && !hasAccess(item?.permissions, currentUserPermissions))
                                             return null;
                                         return (
                                             <div key={index}>
@@ -154,8 +175,7 @@ export const SidebarItem = ({
                                 </div>
                             </div>
                         </motion.div>
-                    ) : null
-                    }
+                    ) : null}
                 </AnimatePresence>
             </>
         )
@@ -205,4 +225,6 @@ export const SidebarItem = ({
         </Link>
     );
 };
+
+export default SidebarItem;
 

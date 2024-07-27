@@ -3,6 +3,7 @@ import '@/styles/globals.css';
 import { NextPageWithLayout } from "@/types";
 import PrivateRoute from "@/utils/private-route";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { Hydrate } from "react-query/hydration";
 import { useState } from "react";
 import DefaultSeo from "@/components/ui/default-seo";
 
@@ -22,9 +23,9 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   
   return (
     <div>
-      <DefaultSeo/>
       <QueryClientProvider client={queryClient}>
-        {/* <DefaultSeo/> */}
+        <Hydrate state={pageProps?.dehydratedState}>
+          <DefaultSeo/>
           { authProps ? (
             <PrivateRoute authProps={authProps}>
               <Layout>
@@ -36,6 +37,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
               <Component {...pageProps} />
             </Layout>
           )}
+        </Hydrate>
       </QueryClientProvider>
     </div> 
   )

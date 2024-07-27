@@ -60,26 +60,36 @@ export const siteSettings = {
           user: {
             href: '',
             label: 'user-management',
-            icon: 'CustomersIcon',
+            icon: '',
             childMenu:[
               {
                 href: '',
                 label: 'Users',
-                icon: 'CustomersIcon',
+                icon: 'AdminListIcon',
                 childMenu: [
                   {
-                    herf: Routes.user.list,
-                    label: 'All-user',
+                    href: Routes.user.list,
+                    label: 'All users',
+                    icon: 'CustomersIcon',
+                  },
+                  {
+                    href: Routes.user.create,
+                    label: 'Add new user',
                     icon: 'CustomersIcon',
                   }
                 ]
-              }
+              },
+              {
+                href: Routes.role.list,
+                label: 'All roles',
+                icon: 'TypesIcon',
+              },
             ]
           },
           shop: {
             href: '',
             label: 'shop-management',
-            icon: 'ShopIcon',
+            icon: 'ShoppingIcon',
             childMenu: [
               {
                 href: '',

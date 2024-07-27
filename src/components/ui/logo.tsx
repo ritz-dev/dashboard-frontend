@@ -42,6 +42,7 @@ const Logo: React.FC<React.AnchorHTMLAttributes<{}>> = ({
                             sizes="(max-width: 768px) 100vw"
                             className="objext-contain"
                             loading="eager"
+                            priority
                         />
                     </span>
                 ) : (
@@ -59,6 +60,7 @@ const Logo: React.FC<React.AnchorHTMLAttributes<{}>> = ({
                             sizes="(max-width: 768px) 100vw"
                             className="objext-contain"
                             loading="eager"
+                            priority
                         />
                     </span>
                 )

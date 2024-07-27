@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
 /*
 * React Date Picker
 */
@@ -404,6 +410,9 @@
 	color: #fff;
 	background-color: rgb(var(--color-accent));
 }
+.react-datepicker__day.react-datepicker__day--disabled.react-datepicker__day--selected {
+  color: #fff;
+}
 
 /*
 * RC Pagination
@@ -419,7 +428,7 @@ group
 .rc-pagination .rc-pagination-next,
 .rc-pagination.rc-pagination-simple .rc-pagination-prev,
 .rc-pagination.rc-pagination-simple .rc-pagination-next {
-  @apply m-0 mt-2 flex h-8 w-8 items-center justify-center rounded border border-border-base bg-gray-50 me-2 hover:border-accent hover:text-accent focus:border-accent focus:text-accent;
+  @apply flex items-center justify-center w-8 h-8 m-0 mt-2 border rounded border-border-base bg-gray-50 me-2 hover:border-accent hover:text-accent focus:border-accent focus:text-accent;
 }
 
 .rc-pagination-prev,
@@ -447,7 +456,7 @@ group
 } */
 
 .rc-pagination .rc-pagination-item a {
-  @apply font-body text-sm text-heading;
+  @apply text-sm font-body text-heading;
 }
 
 .rc-pagination .rc-pagination-item:focus a,
@@ -470,12 +479,12 @@ group
 
 .rc-pagination .rc-pagination-options .rc-pagination-options-quick-jumper,
 .rc-pagination.rc-pagination-simple .rc-pagination-simple-pager {
-  @apply flex items-center font-body text-sm text-heading;
+  @apply flex items-center text-sm font-body text-heading;
 }
 
 .rc-pagination .rc-pagination-options .rc-pagination-options-quick-jumper input,
 .rc-pagination.rc-pagination-simple .rc-pagination-simple-pager input {
-  @apply h-8 rounded border border-border-base bg-gray-50 px-2 font-body text-sm text-heading hover:border-accent focus:border-accent focus:outline-none;
+  @apply h-8 px-2 text-sm border rounded border-border-base bg-gray-50 font-body text-heading hover:border-accent focus:border-accent focus:outline-none;
 }
 
 /* RC Table */
@@ -492,12 +501,14 @@ group
 
 .rc-table tr th,
 .rc-table tr td {
-  @apply border-0 border-b border-border-200 font-body;
+  @apply border-0 font-body;
+}
+.rc-table tr td {
+  @apply border-b border-dashed border-border-200;
 }
 
 .rc-table thead.rc-table-thead th {
-  @apply whitespace-nowrap border-border-200 px-3 py-3 font-body text-sm font-semibold text-heading first:ps-4 last:pe-4;
-  background-color: #f7f8f9;
+  @apply px-3 py-3 text-sm font-semibold whitespace-nowrap bg-gray-50 font-body text-heading first:rounded-tl first:rounded-bl first:ps-5 last:rounded-tr last:rounded-br last:pe-5;
 }
 
 .rc-table tr.rc-table-row:hover {
@@ -505,7 +516,7 @@ group
 }
 
 .rc-table tr.rc-table-row td {
-  @apply cursor-default px-3 py-4 font-body text-sm font-normal text-body first:ps-4 last:pe-4;
+  @apply px-3 py-4 text-sm font-normal cursor-default font-body text-body first:ps-5 last:pe-5;
 }
 .rc-table tr.rc-table-row td.rc-table-cell-row-hover {
 	@apply bg-gray-100;
@@ -521,7 +532,7 @@ group
 }
 
 .rc-table tr.rc-table-expanded-row > td {
-  @apply whitespace-normal border border-gray-50 bg-gray-200 p-0;
+  @apply p-0 whitespace-normal bg-gray-200 border border-gray-50;
 }
 
 .rc-table tr.rc-table-expanded-row tr.rc-table-row {
@@ -593,7 +604,7 @@ Overlay Scrollbar - os-theme-thin-dark
 	left: 0;
 	right: 0;
 	height: 2px;
-	top: 50%;
+	top: 100%;
 	margin-top: -1px;
 }
 .os-theme-thin-dark > .os-scrollbar-vertical > .os-scrollbar-track:before,
@@ -604,7 +615,7 @@ Overlay Scrollbar - os-theme-thin-dark
 	top: 0;
 	bottom: 0;
 	width: 2px;
-	left: 50%;
+	left: 100%;
 	margin-left: -1px;
 }
 .os-theme-thin-dark
@@ -689,6 +700,36 @@ Overlay Scrollbar - os-theme-thin-dark
 	transition: width 0.3s, margin-left 0.3s, background 0.2s;
 }
 
+.sidebar-scrollbar .os-theme-thin-dark > .os-scrollbar-vertical,
+.sidebar-scrollbar
+  .os-theme-thin-dark
+  > .os-scrollbar-vertical
+  > .os-scrollbar-track:before,
+.sidebar-scrollbar
+  .os-theme-thin-dark
+  > .os-scrollbar-vertical
+  > .os-scrollbar-track
+  > .os-scrollbar-handle:before {
+  @apply w-1;
+}
+.sidebar-scrollbar
+  .os-theme-thin-dark
+  > .os-scrollbar-horizontal
+  > .os-scrollbar-track:before,
+.sidebar-scrollbar
+  .os-theme-thin-dark
+  > .os-scrollbar-vertical
+  > .os-scrollbar-track:before {
+  @apply bg-transparent;
+}
+.sidebar-scrollbar
+  .os-theme-thin-dark
+  > .os-scrollbar
+  > .os-scrollbar-track
+  > .os-scrollbar-handle:before {
+  @apply bg-gray-200;
+}
+
 /* Check Box */
 .pb-checkbox {
 	position: absolute;
@@ -751,8 +792,13 @@ Overlay Scrollbar - os-theme-thin-dark
   background: #ffffff;
   width: 2px;
   height: 2px;
-  box-shadow: 2px 0 0 #ffffff, 4px 0 0 #ffffff, 4px -2px 0 #ffffff,
-    4px -4px 0 #ffffff, 4px -6px 0 #ffffff, 4px -8px 0 #ffffff;
+  box-shadow:
+    2px 0 0 #ffffff,
+    4px 0 0 #ffffff,
+    4px -2px 0 #ffffff,
+    4px -4px 0 #ffffff,
+    4px -6px 0 #ffffff,
+    4px -8px 0 #ffffff;
   transform: rotate(45deg);
 }
 
@@ -805,6 +851,32 @@ input[type='number'].number-disable::-webkit-inner-spin-button {
   padding: 0 1px;
 }
 
+.before-border {
+  @apply before:absolute before:inset-y-0 before:left-0 before:my-auto before:h-9 before:w-[1px] before:bg-[#EEEEF1];
+}
+#sold-products-gallery {
+  @apply pb-8;
+}
+#sold-products-gallery .swiper-pagination {
+  @apply -bottom-1;
+}
+#sold-products-gallery .swiper-pagination .swiper-pagination-bullet {
+  @apply rounded cursor-pointer bg-accent;
+}
+#sold-products-gallery
+  .swiper-pagination
+  .swiper-pagination-bullet.swiper-pagination-bullet-active {
+  @apply w-4;
+}
+
+.custom-scrollbar-none::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+.logo-field-area aside > div {
+  @apply px-4;
+}
+
 /* chat message bubble */
 /* .chat-messages .chat-message-item:not(:last-child) > h2,
 .chat-messages .chat-message-item:not(:first-child) > h2 {
@@ -836,3 +908,62 @@ input[type='number'].number-disable::-webkit-inner-spin-button {
 .chat-messages-reverse .chat-message-item:last-child > h2 {
   border-top-right-radius: 0px;
 } */
+
+.flash-sale-table.rc-table thead.rc-table-thead th {
+  @apply bg-[#F9F9F9] text-sm font-normal text-[#666];
+}
+.flash-sale-table.rc-table thead.rc-table-thead th,
+.flash-sale-table.rc-table tr.rc-table-row td {
+  @apply py-[0.5625rem] px-4;
+}
+.flash-sale-table.rc-table tr.rc-table-row td {
+  @apply py-5 text-sm font-medium text-muted;
+}
+.flash-sale-table.rc-table tr.rc-table-row:not(:last-child) td {
+  @apply border-b border-b-[#E5E5E5];
+}
+.flash-sale-table.rc-table table {
+  @apply border-separate;
+}
+
+.flash-sale-pagination.rc-pagination .rc-pagination-item {
+  @apply m-0 transition-colors hover:bg-accent-hover;
+}
+
+.flash-sale-pagination.rc-pagination .rc-pagination-next,
+.flash-sale-pagination.rc-pagination .rc-pagination-prev {
+  @apply !m-0;
+}
+
+.flash-sale-pagination.rc-pagination .rc-pagination-item,
+.flash-sale-pagination.rc-pagination .rc-pagination-next,
+.flash-sale-pagination.rc-pagination .rc-pagination-prev {
+  @apply rounded-full border-none bg-transparent text-sm font-medium text-[#666] transition-colors;
+}
+
+.flash-sale-pagination.rc-pagination {
+  @apply gap-1.5;
+}
+
+.flash-sale-pagination.rc-pagination
+  .rc-pagination-item.rc-pagination-item-active {
+  @apply bg-accent;
+}
+.flash-sale-pagination.rc-pagination .rc-pagination-next,
+.flash-sale-pagination.rc-pagination .rc-pagination-prev {
+  @apply bg-[#F9F9F9] text-[#929292];
+}
+.flash-sale-pagination.rc-pagination
+  .rc-pagination-next:not(.rc-pagination-disabled),
+.flash-sale-pagination.rc-pagination
+  .rc-pagination-prev:not(.rc-pagination-disabled) {
+  @apply transition-colors hover:bg-accent hover:text-white;
+}
+
+.flash-sale-pagination.rc-pagination .rc-pagination-item a {
+  @apply transition-colors;
+}
+
+.flash-sale-pagination.rc-pagination .rc-pagination-item:hover a {
+  @apply text-white;
+}
