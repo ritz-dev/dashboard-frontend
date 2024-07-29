@@ -6,7 +6,7 @@ import TooltipLabel from "./tooltip-label";
 import ValidationError from "./form-validation-error";
 
 interface Props {
-    control: Control<any>;
+    control?: Control<any>;
     error?: string;
     name: string;
     disabled?: boolean;

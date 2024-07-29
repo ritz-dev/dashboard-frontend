@@ -1,10 +1,12 @@
 import { useRouter } from "next/router";
-import { useMutation, useQueryClient } from "react-query"
+import { useMutation, useQuery, useQueryClient } from "react-query"
 import { roleClient } from "./client/role";
 import { adminOnly, getAuthCredentials, hasAccess } from "@/utils/auth-utils";
 import { Routes } from "@/config/routes";
 import { API_ENDPOINTS } from "./client/api-endpoints";
 import { Config } from "@/config";
+import { RolePaginator, RoleQueryOptions } from "@/types";
+import { mapPaginatorData } from "@/utils/data-mappers";
 
 
 export const useCreateRoleMutation = () => {
@@ -42,3 +44,21 @@ export const useUpdateRoleMutation = () => {
         },
     });
 };
+
+export const useRolesQuery = (options: Partial<RoleQueryOptions>) => {
+    const { data, error, isLoading } = useQuery<RolePaginator, Error>(
+        [API_ENDPOINTS.ROLES, options],
+        ({ queryKey, pageParam }) =>
+            roleClient.paginated(Object.assign({}, queryKey[1], pageParam)),
+        {
+            keepPreviousData: true,
+        }
+    );
+
+    return {
+        roles: data?.data ?? [],
+        paginatorInfo: mapPaginatorData(data),
+        error,
+        loading: isLoading
+    }
+}

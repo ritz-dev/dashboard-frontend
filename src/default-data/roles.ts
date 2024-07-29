@@ -1,38 +1,38 @@
 export const rolePermissions = {
     role:[
         {
-            title: "Create new roles with specific permissions.",
-            name: "role-create"
+            label: "Create new roles with specific permissions.",
+            name: "create"
         },
         {
-            title: "Update existing roles to modify permissions.",
-            name: "role-update"
+            label: "Update existing roles to modify permissions.",
+            name: "update"
         },
         {
-            title: "View the details of roles and their permissions",
-            name: "role-read"
+            label: "View the details of roles and their permissions",
+            name: "read"
         },
         {
-            title: "Delete roles that are no longer needed",
-            name: "role-delete"
+            label: "Delete roles that are no longer needed",
+            name: "delete"
         }
     ],
     user: [
         {
-            title: "Grants the ability to create new user accounts.",
-            name: "user-delete"
+            label: "Grants the ability to create new user accounts.",
+            name: "create"
         },
         {
-            title: "Allows updating details of existing user accounts.",
-            name: "user-delete"
+            label: "Allows updating details of existing user accounts.",
+            name: "update"
         },
         {
-            title: "Enables viewing the details of existing users.",
-            name: "user-delete"
+            label: "Enables viewing the details of existing users.",
+            name: "read"
         },
         {
-            title: "Permits deletion of user accounts.",
-            name: "user-delete"
+            label: "Permits deletion of user accounts.",
+            name: "delete"
         }
     ]
 };

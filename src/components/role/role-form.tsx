@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form"
+import { FormProvider, useForm, useWatch } from "react-hook-form"
 import { yupResolver } from '@hookform/resolvers/yup';
 import { roleValidationSchema } from "./role-validation-scheme";
 import { getAuthCredentials } from "@/utils/auth-utils";
@@ -11,9 +11,27 @@ import SwitchInput from "../ui/switch-input";
 import CheckboxInput from "../ui/checkbox-input";
 import RolePermissionCard from "./role-permission-card";
 import { rolePermissions } from "@/default-data/roles";
+import StickyFooterPanel from "../ui/sticky-footer-panel";
+import Button from "../ui/button";
+
+type RoleKeys = 'role' | 'user';
+
+type CrudPermissions = {
+    create: boolean;
+    update: boolean;
+    read: boolean;
+    delete: boolean;
+};
+
+type PermissionsMap<T extends string> = {
+    [K in T]: CrudPermissions;
+}
+
+type RolePermissions = PermissionsMap<RoleKeys>;
 
 type FormValues = {
     name: string;
+    permissions?: RolePermissions[];
 };
 
 const RoleForm = ({ initialValues }: { initialValues?: any }) => {
@@ -21,17 +39,9 @@ const RoleForm = ({ initialValues }: { initialValues?: any }) => {
     const { mutate: createRole, isLoading: creating } = useCreateRoleMutation();
     const { mutate: updateRole, isLoading: updating } = useUpdateRoleMutation();
     
-    const { permissions } = getAuthCredentials();
+    // const { permissions } = getAuthCredentials();
     
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-        getValues,
-        watch,
-        setValue,
-        control,
-    } = useForm<FormValues>({
+    const methods= useForm<FormValues>({
         ...(initialValues
             ? {
                 defaultValues: {
@@ -41,6 +51,12 @@ const RoleForm = ({ initialValues }: { initialValues?: any }) => {
             : {}),
             resolver: yupResolver(roleValidationSchema)
     });
+
+    const {handleSubmit, register, formState: { errors }, watch } = methods;
+
+    const formValue = watch();
+
+    console.log(formValue)
 
     function onSubmit(values: FormValues) {
         if(initialValues) {
@@ -56,7 +72,7 @@ const RoleForm = ({ initialValues }: { initialValues?: any }) => {
     }
     
     return (
-        <>
+        <FormProvider {...methods}>
             <form onSubmit={handleSubmit(onSubmit)} noValidate>
                 <div className="flex flex-wrap pb-8 my-5 border-b border-dashed border-border-base sm:my-8">
                     <Description
@@ -77,20 +93,30 @@ const RoleForm = ({ initialValues }: { initialValues?: any }) => {
                 </div>
                 <div className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
                     <RolePermissionCard
-                        control={control}
-                        title={'Role Permission'}
-                        name={'role-permission'}
+                        title={'Permission'}
+                        name={'role'}
                         permissionList={rolePermissions?.role}
                     />
                     <RolePermissionCard
-                        control={control}
                         title={'User Permission'}
-                        name={'user-permission'}
+                        name={'user'}
                         permissionList={rolePermissions?.user}
                     />
                 </div>
+                <StickyFooterPanel className="z-0">
+                    <div className="text-end">
+                        <Button
+                            loading={creating || updating}
+                            disabled={creating || updating}
+                        >
+                            {initialValues
+                                ? ('Update')
+                                : ('Save')}
+                        </Button>
+                    </div>
+                </StickyFooterPanel>
             </form>
-        </>
+        </FormProvider>
     )
 }
 

@@ -20,7 +20,7 @@ export interface User {
 export interface Role {
     id?:string;
     name?: string;
-    slug?:string
+    slug?:string;
 }
 
 export interface RoleInput {
@@ -46,7 +46,7 @@ export interface GetParams {
 export interface QueryOptions {
     language:string;
     limit?: number;
-    page?: string;
+    page?: number;
     orderBy?: string;
     sortedBy?: SortOrder;
 }
@@ -73,4 +73,21 @@ export interface PaginatorInfo<T> {
     total: number;
 }
 
+export interface MappedPaginatorInfo {
+    currentPage: number;
+    firstPageUrl: string;
+    from: number;
+    lastPage: number;
+    lastPageUrl: string;
+    links: any[];
+    nextPageUrl: string | null;
+    path: string;
+    perPage: number;
+    prevPageUrl: string | null;
+    to: number;
+    total: number;
+    hasMorePages: boolean;
+}
+
 export interface RolePaginator extends PaginatorInfo<Role> {}
+
