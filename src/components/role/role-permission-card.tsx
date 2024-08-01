@@ -7,7 +7,7 @@ import { Checkbox, Switch } from "@headlessui/react";
 
 interface Props {
     title: string;
-    name: string;
+    name?: string;
     permissionList: {
         label: string;
         name: string;
