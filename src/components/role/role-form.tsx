@@ -1,4 +1,4 @@
-import { FormProvider, useForm, useWatch } from "react-hook-form"
+import { FormProvider, useFieldArray, useForm, useWatch } from "react-hook-form"
 import { yupResolver } from '@hookform/resolvers/yup';
 import { roleValidationSchema } from "./role-validation-scheme";
 import { getAuthCredentials } from "@/utils/auth-utils";
@@ -14,24 +14,9 @@ import { rolePermissions } from "@/default-data/roles";
 import StickyFooterPanel from "../ui/sticky-footer-panel";
 import Button from "../ui/button";
 
-type RoleKeys = 'role' | 'user';
-
-type CrudPermissions = {
-    create: boolean;
-    update: boolean;
-    read: boolean;
-    delete: boolean;
-};
-
-type PermissionsMap<T extends string> = {
-    [K in T]: CrudPermissions;
-}
-
-type RolePermissions = PermissionsMap<RoleKeys>;
-
 type FormValues = {
     name: string;
-    permissions?: RolePermissions[];
+    permissions?: {name:string}[];
 };
 
 const RoleForm = ({ initialValues }: { initialValues?: any }) => {
@@ -39,26 +24,28 @@ const RoleForm = ({ initialValues }: { initialValues?: any }) => {
     const { mutate: createRole, isLoading: creating } = useCreateRoleMutation();
     const { mutate: updateRole, isLoading: updating } = useUpdateRoleMutation();
     
+
+    const DEFAULT_ROLE = initialValues ? initialValues : {
+        name:'',
+        permissions:[]
+    }
     // const { permissions } = getAuthCredentials();
     
     const methods= useForm<FormValues>({
-        ...(initialValues
-            ? {
-                defaultValues: {
-                    ...initialValues,
-                }
-            }
-            : {}),
+            defaultValues: {
+                ...DEFAULT_ROLE,
+            },
             resolver: yupResolver(roleValidationSchema)
     });
 
     const {handleSubmit, register, formState: { errors }} = methods;
-
-
+    
+    console.log(methods.watch());
+    
     function onSubmit(values: FormValues) {
 
-        console.log(values);
-        
+        console.log(values)
+
         if(initialValues) {
             updateRole({
                 id: initialValues.id,
@@ -93,14 +80,12 @@ const RoleForm = ({ initialValues }: { initialValues?: any }) => {
                 </div>
                 <div className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
                     <RolePermissionCard
-                        title={'Permission'}
-                        name={'role'}
-                        permissionList={rolePermissions?.role}
+                        title={'Role Permission'}
+                        permissionList={rolePermissions.filter(permission => permission.name.startsWith('role-'))}
                     />
                     <RolePermissionCard
                         title={'User Permission'}
-                        name={'user'}
-                        permissionList={rolePermissions?.user}
+                        permissionList={rolePermissions.filter(permission => permission.name.startsWith('user'))}
                     />
                 </div>
                 <StickyFooterPanel className="z-0">

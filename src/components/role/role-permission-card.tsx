@@ -1,10 +1,8 @@
 import Card from "../common/card";
 import PageHeading from "../common/page-heading";
-import SwitchInput from "../ui/switch-input";
-import CheckboxInput from "../ui/checkbox-input";
 import { useEffect, useState } from "react";
-import { useFormContext, useWatch } from "react-hook-form";
-import { Switch } from "@headlessui/react";
+import { Controller, useFormContext, useWatch } from "react-hook-form";
+import { Checkbox, Switch } from "@headlessui/react";
 
 
 interface Props {
@@ -18,11 +16,11 @@ interface Props {
 
 const RolePermissionCard = ({
     title,
-    name,
+    name = 'permissions',
     permissionList,
 } : Props ) => {
 
-    const { getValues, setValue, control } = useFormContext();
+    const { setValue, control } = useFormContext();
     const [isAllChecked, setIsAllChecked] = useState(false);
 
     const permissionsGroup = useWatch({
@@ -31,29 +29,37 @@ const RolePermissionCard = ({
     });
 
     useEffect(()=> {
-
-        if(permissionsGroup?.[name] !== undefined){
-            const allChecked = Object.values(permissionsGroup?.[name]).every((permission) => permission === true);
-            setIsAllChecked(allChecked);
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [permissionsGroup]);
+        const allChecked = permissionList.every(permission => permissionsGroup.includes(permission.name));
+        setIsAllChecked(allChecked);
+    }, [permissionsGroup,permissionList]);
 
     const handelToggleAll = (checked : boolean) => {
 
-        const permissions = getValues('permissions');
-        const newPermissions = { ...permissions};
-
-        if(newPermissions[name] != undefined){
-            permissionList.forEach(permission => {
-                newPermissions[name][permission.name] = checked;
-            });
-
-            setValue(`permissions`, newPermissions);
-
-            setIsAllChecked(prev => !prev);
+        if(checked) {
+            const newPermissions = [
+                ...permissionsGroup,
+                ...permissionList.filter(
+                    (permission) => !permissionsGroup.includes(permission.name)
+                ).map(permission => permission.name)
+            ]
+            
+            setValue('permissions', newPermissions);
+        } else {
+            const newPermissions = permissionsGroup.filter(
+                (permission : string) => !permissionList.some(p => p.name === permission)
+            );
+            setValue('permissions', newPermissions);
         }
     };
+
+    const handleCheckboxChange = (value: string) => {
+        const currentPermissions = permissionsGroup;
+        const newPermissions = currentPermissions?.includes(value)
+            ? currentPermissions.filter((p: string) => p !== value)
+        : [...currentPermissions, value];
+
+        setValue('permissions', newPermissions);
+    }
 
     return (
         <Card>
@@ -89,10 +95,21 @@ const RolePermissionCard = ({
                             return (
                                 <li className="font-medium" key={index}>
                                     <div className="flex justify-between">
-                                        <span>{permission.label}</span>
-                                        <CheckboxInput
-                                            name={`permissions.${name}.${permission.name}`}
-                                            value={permissionsGroup?.[name][permission.name]}
+                                        <span className="w-5/6">{permission.label}</span>
+                                        <Controller
+                                            name={name}
+                                            control={control}
+                                            render={({ field }) => (
+                                                <Checkbox
+                                                    checked={permissionsGroup.includes(permission.name)}
+                                                    onChange={() => handleCheckboxChange(permission.name)}
+                                                    className="group block size-5 rounded border border-base-dark bg-white data-[checked]:bg-accent"
+                                                >
+                                                    <svg className="stroke-white opacity-0 group-data-[checked]:opacity-100" viewBox="0 0 14 14" fill="none">
+                                                    <path d="M3 8L6 11L11 3.5" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+                                                    </svg>
+                                                </Checkbox>
+                                            )}
                                         />
                                     </div>
                                 </li>
