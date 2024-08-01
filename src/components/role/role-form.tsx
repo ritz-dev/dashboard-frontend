@@ -56,6 +56,9 @@ const RoleForm = ({ initialValues }: { initialValues?: any }) => {
 
 
     function onSubmit(values: FormValues) {
+
+        console.log(values);
+        
         if(initialValues) {
             updateRole({
                 id: initialValues.id,
