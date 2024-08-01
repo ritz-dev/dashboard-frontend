@@ -64,3 +64,17 @@ export const useLogoutMutation = () => {
         }
     });
 }
+
+export const useRegisterMutation = () => {
+    const queryClient = useQueryClient();
+
+    return useMutation(userClient.register, {
+        onSuccess: () => {
+
+        },
+        // Always refetch after error or success:
+        onSettled: () => {
+            queryClient.invalidateQueries(API_ENDPOINTS.REGISTER);
+        },
+    })
+}

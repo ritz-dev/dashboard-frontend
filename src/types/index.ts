@@ -38,6 +38,15 @@ export interface LoginInput {
     password: string;
 }
 
+export interface RegisterInput {
+    name: string;
+    email: string;
+    password: string;
+    imageUrl: string;
+    role: string;
+    phoneNumber: string;
+}
+
 export interface GetParams {
     slug: string;
     language: string;

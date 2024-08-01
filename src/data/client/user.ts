@@ -1,6 +1,7 @@
-import { AuthResponse, LoginInput, User } from "@/types";
+import { AuthResponse, LoginInput, RegisterInput, User } from "@/types";
 import { HttpClient } from "./http-client";
 import { API_ENDPOINTS } from "./api-endpoints";
+import { register } from "module";
 
 export const userClient = {
     me: () => {
@@ -11,5 +12,8 @@ export const userClient = {
     },
     logout: () => {
         return HttpClient.post<any>(API_ENDPOINTS.LOGOUT, {});
+    },
+    register: (variables: RegisterInput) => {
+        return HttpClient.post<AuthResponse>(API_ENDPOINTS.TOKEN, variables);
     }
 }

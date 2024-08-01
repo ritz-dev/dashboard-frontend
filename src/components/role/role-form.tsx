@@ -52,11 +52,8 @@ const RoleForm = ({ initialValues }: { initialValues?: any }) => {
             resolver: yupResolver(roleValidationSchema)
     });
 
-    const {handleSubmit, register, formState: { errors }, watch } = methods;
+    const {handleSubmit, register, formState: { errors }} = methods;
 
-    const formValue = watch();
-
-    console.log(formValue)
 
     function onSubmit(values: FormValues) {
         if(initialValues) {
