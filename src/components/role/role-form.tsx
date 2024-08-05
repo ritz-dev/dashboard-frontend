@@ -13,47 +13,64 @@ import RolePermissionCard from "./role-permission-card";
 import { rolePermissions } from "@/default-data/roles";
 import StickyFooterPanel from "../ui/sticky-footer-panel";
 import Button from "../ui/button";
+import TextArea from "../ui/text-area";
+import { Role } from "@/types";
+import { UpdateIcon } from "../icons/update";
+
+
 
 type FormValues = {
+    slug: string;
     name: string;
-    permissions?: {name:string}[];
+    description: any;
+    permissions: string[];    
+}
+
+const DEFAULT_ROLE = {
+    name:'',
+    description: '',
+    permissions:[]
+}
+
+type IProps = {
+    initialValues?: Role | undefined;
 };
 
-const RoleForm = ({ initialValues }: { initialValues?: any }) => {
-    
+const CreateOrUpdateRoleForm = ({ initialValues }:  IProps ) => {
+
     const { mutate: createRole, isLoading: creating } = useCreateRoleMutation();
     const { mutate: updateRole, isLoading: updating } = useUpdateRoleMutation();
     
-
-    const DEFAULT_ROLE = initialValues ? initialValues : {
-        name:'',
-        permissions:[]
-    }
     // const { permissions } = getAuthCredentials();
     
     const methods= useForm<FormValues>({
-            defaultValues: {
-                ...DEFAULT_ROLE,
-            },
-            resolver: yupResolver(roleValidationSchema)
+            defaultValues: initialValues
+                ? {
+                    ...initialValues
+                }
+                : DEFAULT_ROLE,
+            //@ts-ignore
+            resolver: yupResolver(roleValidationSchema),
+            shouldUnregister: true
     });
 
     const {handleSubmit, register, formState: { errors }} = methods;
     
-    console.log(methods.watch());
-    
-    function onSubmit(values: FormValues) {
+    const onSubmit = async (values: FormValues) => {
 
-        console.log(values)
+        const input = {
+            ...values,
+            description: values.description === undefined ? null : values.description
+        }
 
         if(initialValues) {
             updateRole({
                 id: initialValues.id,
-                ...values,
+                ...input,
             });
         } else {
             createRole({
-                ...values,
+                ...input,
             })
         }
     }
@@ -63,8 +80,8 @@ const RoleForm = ({ initialValues }: { initialValues?: any }) => {
             <form onSubmit={handleSubmit(onSubmit)} noValidate>
                 <div className="flex flex-wrap pb-8 my-5 border-b border-dashed border-border-base sm:my-8">
                     <Description
-                        title={'Title'}
-                        details={'Add name of role from here'}
+                        title={'Basic Info'}
+                        details={'Add some basic info about role from here'}
                         className="w-full px-0 pb-5 sm:w-4/12 sm:py-8 sm:pe-4 md:w-1/3 md:pe-5"
                     />
                     <Card className="w-full sm:w-8/12 md:w-2/3">
@@ -75,6 +92,11 @@ const RoleForm = ({ initialValues }: { initialValues?: any }) => {
                             className="mb-5"
                             error={errors.name?.message!}
                             required
+                        />
+                        <TextArea
+                            label={('Description')}
+                            {...register('description')}
+                            variant="outline"
                         />
                     </Card>
                 </div>
@@ -93,10 +115,20 @@ const RoleForm = ({ initialValues }: { initialValues?: any }) => {
                         <Button
                             loading={creating || updating}
                             disabled={creating || updating}
+                            size="medium"
+                            className="text-sm md:text-base"
                         >
-                            {initialValues
-                                ? ('Update')
-                                : ('Save')}
+                            {initialValues ? (
+                                <>
+                                    <UpdateIcon className="w-5 h-5 shrink-0 mr-2" />
+                                    <span className="sm:hidden">
+                                        {('Update')}
+                                    </span>
+                                    <span className="hidden sm:block">
+                                        {('Update Role')}
+                                    </span>
+                                </>
+                                ) : ('Save')}
                         </Button>
                     </div>
                 </StickyFooterPanel>
@@ -105,4 +137,4 @@ const RoleForm = ({ initialValues }: { initialValues?: any }) => {
     )
 }
 
-export default RoleForm;
+export default CreateOrUpdateRoleForm;

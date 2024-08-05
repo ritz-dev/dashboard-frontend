@@ -18,24 +18,24 @@ const TitleWithSort = ({
 } : Props) => {
     return (
         <span className={classNames('inline-flex items-center', className)}>
-      <span title={`Sort by ${title}`}>{title}</span>
+          <span title={`Sort by ${title}`}>{title}</span>
 
-      {ascending ? (
-        <TriangleArrowUp
-          width="9"
-          className={cn('flex-shrink-0 text-gray-300 ms-1.5', {
-            '!text-heading': isActive,
-          })}
-        />
-      ) : (
-        <TriangleArrowDown
-          width="9"
-          className={cn('flex-shrink-0 text-gray-300 ms-1.5', {
-            '!text-heading': isActive,
-          })}
-        />
-      )}
-    </span>
+          {ascending ? (
+            <TriangleArrowUp
+              width="9"
+              className={cn('flex-shrink-0 text-gray-300 ms-1.5', {
+                '!text-heading': isActive,
+              })}
+            />
+          ) : (
+            <TriangleArrowDown
+              width="9"
+              className={cn('flex-shrink-0 text-gray-300 ms-1.5', {
+                '!text-heading': isActive,
+              })}
+            />
+          )}
+        </span>
     )
 }
 

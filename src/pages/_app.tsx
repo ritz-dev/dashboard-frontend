@@ -6,6 +6,8 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { Hydrate } from "react-query/hydration";
 import { useState } from "react";
 import DefaultSeo from "@/components/ui/default-seo";
+import { ModalProvider } from "@/components/ui/modal/modal.context";
+import ManagedModal from "@/components/ui/modal/managed-modal";
 
 const Noop: React.FC<{children?: React.ReactNode}> = ({ children }) => (
   <>{children}</>
@@ -25,18 +27,21 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
     <div>
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps?.dehydratedState}>
-          <DefaultSeo/>
-          { authProps ? (
-            <PrivateRoute authProps={authProps}>
-              <Layout>
+          <ModalProvider>
+            <DefaultSeo/>
+            { authProps ? (
+              <PrivateRoute authProps={authProps}>
+                <Layout>
+                  <Component {...pageProps} />
+                </Layout>
+              </PrivateRoute>
+            ) : (
+              <Layout {...pageProps}>
                 <Component {...pageProps} />
               </Layout>
-            </PrivateRoute>
-          ) : (
-            <Layout {...pageProps}>
-              <Component {...pageProps} />
-            </Layout>
-          )}
+            )}
+            <ManagedModal />
+          </ModalProvider>
         </Hydrate>
       </QueryClientProvider>
     </div> 

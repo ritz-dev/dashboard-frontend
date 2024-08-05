@@ -1,5 +1,5 @@
 import Layout from '@/components/layouts/admin';
-import RoleForm from '@/components/role/role-form';
+import CreateOrUpdateRoleForm from '@/components/role/role-form';
 
 export default function CreateRole() {
     return (
@@ -9,7 +9,7 @@ export default function CreateRole() {
                     {'Create Role'}
                 </h1>
             </div>
-            <RoleForm />
+            <CreateOrUpdateRoleForm />
         </>
     )
 }

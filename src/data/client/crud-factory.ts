@@ -15,8 +15,8 @@ export function curdFactory<Type, QueryParams extends LanguageParam,InputType>(
         paginated(params: QueryParams) {
             return HttpClient.get<PaginatorInfo<Type>>(endpoint, params);
         },
-        get({ slug, language }: GetParams) {
-            return HttpClient.get<Type>(`${endpoint}/${slug}`, { language });
+        get({ slug }: GetParams) {
+            return HttpClient.get<Type>(`${endpoint}/${slug}`);
         },
         create(data: InputType) {
             return HttpClient.post<Type>(endpoint, data);

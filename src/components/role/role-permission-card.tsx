@@ -95,11 +95,11 @@ const RolePermissionCard = ({
                             return (
                                 <li className="font-medium" key={index}>
                                     <div className="flex justify-between">
-                                        <span className="w-5/6">{permission.label}</span>
+                                        <span className="w-5/6 text-sm">{permission.label}</span>
                                         <Controller
                                             name={name}
                                             control={control}
-                                            render={({ field }) => (
+                                            render={() => (
                                                 <Checkbox
                                                     checked={permissionsGroup.includes(permission.name)}
                                                     onChange={() => handleCheckboxChange(permission.name)}

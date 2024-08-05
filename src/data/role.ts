@@ -5,7 +5,7 @@ import { adminOnly, getAuthCredentials, hasAccess } from "@/utils/auth-utils";
 import { Routes } from "@/config/routes";
 import { API_ENDPOINTS } from "./client/api-endpoints";
 import { Config } from "@/config";
-import { RolePaginator, RoleQueryOptions } from "@/types";
+import { GetParams, Role, RolePaginator, RoleQueryOptions } from "@/types";
 import { mapPaginatorData } from "@/utils/data-mappers";
 
 
@@ -35,7 +35,7 @@ export const useUpdateRoleMutation = () => {
 
     return useMutation(roleClient.update, {
         onSuccess: async (data) => {
-            await router.push(`/${data?.slug}/edit`, undefined, {
+            await router.push(`/${API_ENDPOINTS.ROLES}/${data?.slug}/edit`, undefined, {
                 locale: Config.defaultLanguage
             })
         },
@@ -43,6 +43,39 @@ export const useUpdateRoleMutation = () => {
             queryClient.invalidateQueries(API_ENDPOINTS.ROLES);
         },
     });
+};
+
+
+export const useDeleteProductMutation = () => {
+    const queryClient = useQueryClient();
+
+    return useMutation(roleClient.delete, {
+        onSuccess: () => {
+            
+        },
+        onSettled: () => {
+            queryClient.invalidateQueries(API_ENDPOINTS.ROLES);
+        },
+        onError: (error: any) => {
+
+        }
+    })
+}
+
+export const useRoleQuery = ({ slug }: GetParams) => {
+    const { data,error,isLoading } = useQuery<Role, Error>(
+        [API_ENDPOINTS.ROLES, { slug }],
+        () => roleClient.get({ slug }),
+        {
+            enabled: !!slug
+        }
+    );
+
+    return {
+        role: data,
+        error,
+        isLoading,
+    };
 };
 
 export const useRolesQuery = (options: Partial<RoleQueryOptions>) => {

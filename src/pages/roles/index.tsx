@@ -4,18 +4,19 @@ import PageHeading from "@/components/common/page-heading";
 import { adminOnly } from "@/utils/auth-utils";
 import LinkButton from "@/components/ui/link-button";
 import { Routes } from "@/config/routes";
-import { GetStaticProps } from "next";
 import RoleList from "@/components/role/role-list";
 import { useState } from "react";
 import { SortOrder } from "@/types";
 import { useRolesQuery } from "@/data/role";
+import Loader from "@/components/ui/loader/loader";
+import ErrorMessage from "@/components/ui/error-message";
 
 export default function AllRolesPage() {
 
     const [searchTerm, setSearchTerm] = useState('');
     const [page, setPage] = useState(1);
     const [orderBy, setOrder] = useState('created_at');
-    const [sortedBy,  setColumn] = useState<SortOrder>(SortOrder.Desc);
+    const [sortedBy,  setColumn] = useState<SortOrder>(SortOrder.Asc);
     const { roles, paginatorInfo, loading, error} = useRolesQuery({
         name: searchTerm,
         limit: 10,
@@ -23,8 +24,12 @@ export default function AllRolesPage() {
         orderBy,
         sortedBy
     });
+
+    if (loading) return <Loader text={('Loading')} />;
+    if (error) return <ErrorMessage message={error.message} />;
+    
     function handleSearch({ searchText }: { searchText:string }) {
-        setSearchTerm(searchTerm);
+        setSearchTerm(searchText);
     }
 
     function handlePagination(current:any) {
@@ -61,7 +66,3 @@ export default function AllRolesPage() {
 // };
 
 AllRolesPage.Layout = Layout;
-
-export const getStaticProps: GetStaticProps = async () => ({
-    props:{}
-});

@@ -1,3 +1,4 @@
+import { atom } from "jotai";
 
 export const SUPER_ADMIN = 'super_admin';
 export const STORE_OWNER = 'store_owner';
@@ -33,3 +34,5 @@ export const ACCEPTED_IMAGE_TYPES = {
 };
 
 export const imageUrlRegExp = /\.(jpg|jpeg|png|gif|bmp|webp)$/i;
+
+export const searchModalInitialValues = atom(false);

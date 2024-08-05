@@ -5,6 +5,8 @@ import Pagination from "../ui/pagination";
 import { useState } from "react";
 import TitleWithSort from "../ui/title-with-sort";
 import Badge from "../ui/badge/badge";
+import LanguageSwitcher from "../ui/lang-action/action";
+import { Routes } from "@/config/routes";
 
 
 type IProps = {
@@ -14,7 +16,6 @@ type IProps = {
     onSort: (current: any) => void;
     onOrder: (current: string) => void;
 }
-
 
 const RoleList = ({
     roles,
@@ -54,7 +55,7 @@ const RoleList = ({
             key: 'id',
             align: 'left' as AlignType,
             width: 130,
-            render: (id: number) => `#id: ${id}`,
+            render: (id: number) => `${id}`,
         },
         {
             title: (
@@ -80,39 +81,37 @@ const RoleList = ({
                 </div>
             ),
         },
-        // {
-        //     title: (
-        //       <TitleWithSort
-        //         title={'status'}
-        //         ascending={
-        //           sortingObj.sort === SortOrder.Asc &&
-        //           sortingObj.column === 'is_active'
-        //         }
-        //         isActive={sortingObj.column === 'is_active'}
-        //       />
-        //     ),
-        //     className: 'cursor-pointer',
-        //     dataIndex: 'is_active',
-        //     key: 'is_active',
-        //     align: 'center',
-        //     width: 150,
-        //     onHeaderCell: () => onHeaderClick('is_active'),
-        //     render: (is_active: boolean) => (
-        //       <Badge
-        //         textKey={is_active ? 'active' : 'inactive'}
-        //         color={
-        //           is_active
-        //             ? 'bg-accent/10 !text-accent'
-        //             : 'bg-status-failed/10 text-status-failed'
-        //         }
-        //       />
-        //     ),
-        //   },
-
+        {
+            title: 'Description',
+            dataIndex:'description',
+            key:'description',
+            align: 'left' as AlignType,
+            width:1000,
+            className: 'cursor-pointer',
+            render: (description: any) => (
+                <div className="flex items-center">
+                    <span className="truncate whitespace-nowrap font-medium">
+                        {description}
+                    </span>
+                </div>
+            )
+        },
+        {
+            title: 'Actions',
+            dataIndex: 'slug',
+            key: 'actions',
+            align: 'right' as AlignType,
+            width: 120,
+            render: (slug: string, record: Role) => (
+              <LanguageSwitcher
+                slug={slug}
+                record={record}
+                deleteModalView="DELETE_ROLE"
+                routes={Routes?.role}
+              />
+            ),
+        },
     ]
-
-
-
 
     return (
         <>

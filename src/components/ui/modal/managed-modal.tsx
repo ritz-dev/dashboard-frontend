@@ -1,0 +1,28 @@
+import dynamic from "next/dynamic";
+import Modal from "./modal";
+import { MODAL_VIEWS, useModalAction, useModalState } from "./modal.context"
+
+
+const RoleDeleteView = dynamic(
+    () => import('@/components/role/role-delete-view'),
+);
+
+function renderModal(view: MODAL_VIEWS | undefined, data:any) {
+    switch (view) {
+        case 'DELETE_ROLE':
+            return <RoleDeleteView />;
+    }
+}
+
+const ManagedModal = () => {
+    const { isOpen, view, data } = useModalState();
+    const { closeModal } = useModalAction();
+
+    return (
+        <Modal open={isOpen} onClose={closeModal}>
+            {renderModal(view, data)}
+        </Modal>
+    )
+}
+
+export default ManagedModal;

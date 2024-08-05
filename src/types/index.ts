@@ -18,13 +18,16 @@ export interface User {
 }
 
 export interface Role {
-    id?:string;
-    name?: string;
-    slug?:string;
+    id:string;
+    name: string;
+    description: string;
+    permission: string[];
+    slug:string;
 }
 
 export interface RoleInput {
     name: string;
+    description: string | null;
 }
 
 export interface AuthResponse {
@@ -49,7 +52,6 @@ export interface RegisterInput {
 
 export interface GetParams {
     slug: string;
-    language: string;
 }
 
 export interface QueryOptions {
