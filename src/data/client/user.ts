@@ -1,9 +1,12 @@
-import { AuthResponse, LoginInput, RegisterInput, User } from "@/types";
+import { AuthResponse, LoginInput, QueryOptions, User, UserInput } from "@/types";
 import { HttpClient } from "./http-client";
 import { API_ENDPOINTS } from "./api-endpoints";
 import { register } from "module";
+import { curdFactory } from "./crud-factory";
+
 
 export const userClient = {
+    ...curdFactory<User, QueryOptions, UserInput>(API_ENDPOINTS.USERS),
     me: () => {
         return HttpClient.get<User>(API_ENDPOINTS.ME);
     },
@@ -13,7 +16,4 @@ export const userClient = {
     logout: () => {
         return HttpClient.post<any>(API_ENDPOINTS.LOGOUT, {});
     },
-    register: (variables: RegisterInput) => {
-        return HttpClient.post<AuthResponse>(API_ENDPOINTS.TOKEN, variables);
-    }
 }

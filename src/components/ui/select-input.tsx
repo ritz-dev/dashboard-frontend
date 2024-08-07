@@ -1,5 +1,5 @@
-import Select from '@/components/ui/select/select';
 import TooltipLabel from '@/components/ui/tooltip-label';
+import dynamic from 'next/dynamic';
 import { Controller } from 'react-hook-form';
 import { GetOptionLabel } from 'react-select';
 
@@ -7,7 +7,10 @@ interface SelectInputProps {
   control: any;
   rules?: any;
   name: string;
-  options: object[];
+  options: {
+    label: string;
+    value: string;
+  }[];
   getOptionLabel?: GetOptionLabel<unknown>;
   getOptionValue?: GetOptionLabel<unknown>;
   isMulti?: boolean;
@@ -41,6 +44,8 @@ const SelectInput = ({
 
   const labelClasses = 'text-lg';
 
+  const Select = dynamic(() => import('@/components/ui/select/select'), { ssr: false });
+
   return (
     <>
       {label ? (
@@ -62,6 +67,8 @@ const SelectInput = ({
         render={({ field }) => (
           <Select
             {...field}
+            value={options.find(option => option.value === field.value) || null}
+            onChange={(selectedOption) => field.onChange((selectedOption as any)?.value || '')}
             getOptionLabel={getOptionLabel}
             getOptionValue={getOptionValue}
             placeholder={placeholder}

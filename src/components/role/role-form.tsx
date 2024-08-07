@@ -1,14 +1,10 @@
-import { FormProvider, useFieldArray, useForm, useWatch } from "react-hook-form"
+import { FormProvider, useForm } from "react-hook-form"
 import { yupResolver } from '@hookform/resolvers/yup';
 import { roleValidationSchema } from "./role-validation-scheme";
-import { getAuthCredentials } from "@/utils/auth-utils";
 import { useCreateRoleMutation, useUpdateRoleMutation } from "@/data/role";
 import Description from "../ui/description";
 import Card from "../common/card";
 import Input from "../ui/input";
-import PageHeading from "../common/page-heading";
-import SwitchInput from "../ui/switch-input";
-import CheckboxInput from "../ui/checkbox-input";
 import RolePermissionCard from "./role-permission-card";
 import { rolePermissions } from "@/default-data/roles";
 import StickyFooterPanel from "../ui/sticky-footer-panel";

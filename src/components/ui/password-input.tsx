@@ -1,4 +1,4 @@
-import {forwardRef, InputHTMLAttributes, useState } from "react";
+import React, { InputHTMLAttributes, useState } from "react";
 import cn from 'classnames';
 import Link from "./link";
 import { EyeOff } from "../icons/eye-off-icon";
@@ -13,7 +13,7 @@ export interface Props extends InputHTMLAttributes<HTMLInputElement> {
     forgotPageLink?: string;
     shadow?: boolean;
     variant?: 'normal' | 'solid' | 'outline';
-    error: string | undefined;
+    error?: string | undefined;
     required?: boolean;
 }
 
@@ -29,7 +29,7 @@ const classes = {
 
 const labelClasses = 'font-semibold leading-none text-body-dark text-lg';
 
-const PasswordInput = forwardRef<HTMLInputElement, Props>(
+const PasswordInput = React.forwardRef<HTMLInputElement, Props>(
     (
         {
             className,

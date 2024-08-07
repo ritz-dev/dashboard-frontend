@@ -10,6 +10,12 @@ export enum SortOrder {
     Desc = 'desc'
 }
 
+export interface Attachment {
+    thumbnail: string;
+    original: string;
+    id?: string
+}
+
 export interface User {
     id: string;
     full_name: string;
@@ -41,11 +47,11 @@ export interface LoginInput {
     password: string;
 }
 
-export interface RegisterInput {
+export interface UserInput {
     name: string;
     email: string;
     password: string;
-    imageUrl: string;
+    imageUrl?: string | null;
     role: string;
     phoneNumber: string;
 }

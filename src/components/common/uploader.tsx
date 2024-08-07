@@ -29,7 +29,6 @@ export default function Uploader({
   maxFiles,
   disabled,
 }: any) {
-  const { t } = useTranslation();
   const [files, setFiles] = useState<Attachment[]>(getPreviewImage(value));
   const { mutate: upload, isLoading: loading } = useUploadMutation();
   const [error, setError] = useState<string | null>(null);
@@ -42,7 +41,7 @@ export default function Uploader({
         }
       : { ...ACCEPTED_FILE_TYPES }),
     multiple,
-    onDrop: async (acceptedFiles) => {
+    onDrop: async (acceptedFiles : any) => {
       if (acceptedFiles.length) {
         upload(
           acceptedFiles, // it will be an array of uploaded attachments
@@ -77,13 +76,13 @@ export default function Uploader({
     },
     // maxFiles: 2,
     maxSize: maxSize,
-    onDropRejected: (fileRejections) => {
-      fileRejections.forEach((file) => {
-        file?.errors?.forEach((error) => {
+    onDropRejected: (fileRejections : any) => {
+      fileRejections.forEach((file : any) => {
+        file?.errors?.forEach((error : any) => {
           if (error?.code === 'file-too-large') {
-            setError(t('error-file-too-large'));
+            setError(('File Too Large'));
           } else if (error?.code === 'file-invalid-type') {
-            setError(t('error-invalid-file-type'));
+            setError(('Invalid File Type'));
           }
         });
       });
@@ -237,10 +236,10 @@ export default function Uploader({
           ) : (
             <>
               <span className="font-semibold text-accent">
-                {t('text-upload-highlight')}
+                {('Upload Highlight')}
               </span>{' '}
-              {t('text-upload-message')} <br />
-              <span className="text-xs text-body">{t('text-img-format')}</span>
+              {('Upload Message')} <br />
+              <span className="text-xs text-body">{('Img Format')}</span>
             </>
           )}
         </p>

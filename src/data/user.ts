@@ -67,11 +67,22 @@ export const useLogoutMutation = () => {
 
 export const useRegisterMutation = () => {
     const queryClient = useQueryClient();
+    const router = useRouter();
 
-    return useMutation(userClient.register, {
-        onSuccess: () => {
-
+    return useMutation(userClient.create, {
+        onSuccess: (data: any) => {
+            if (data) {
+                router.push(Routes.user.list);
+              }
         },
+        onError: (error: any) => {
+            // Object.keys(error?.response?.data).forEach((field: any) => {
+            //   setError(field, {
+            //     type: 'manual',
+            //     message: error?.response?.data[field][0],
+            //   });
+            // });
+          },
         // Always refetch after error or success:
         onSettled: () => {
             queryClient.invalidateQueries(API_ENDPOINTS.REGISTER);

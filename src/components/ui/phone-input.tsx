@@ -1,9 +1,11 @@
-import { InputHTMLAttributes } from "react";
+import { forwardRef, InputHTMLAttributes } from "react";
 import { Controller } from "react-hook-form";
 import TooltipLabel from "./tooltip-label";
 import { twMerge } from "tailwind-merge";
 import cn from 'classnames';
 import PhoneInput from 'react-phone-input-2';
+
+import 'react-phone-input-2/lib/material.css';
 
 export interface Props extends InputHTMLAttributes<HTMLInputElement> {
     className?: string;
@@ -19,7 +21,8 @@ export interface Props extends InputHTMLAttributes<HTMLInputElement> {
     control: any;
 }
 
-const PhoneNumberInput: React.FC<Props> = ({
+const PhoneNumberInput= forwardRef<HTMLInputElement, Props>(
+    ({
     label,
     required,
     showLabel = true,
@@ -32,7 +35,7 @@ const PhoneNumberInput: React.FC<Props> = ({
     name,
     control,
     ...rest
-}) => {
+},ref) => {
 
     const labelClasses = 'text-lg'
 
@@ -53,13 +56,14 @@ const PhoneNumberInput: React.FC<Props> = ({
                     ''
                     )}
                     <PhoneInput
+                        country="mm" 
                         value={value}
                         onChange={onChange}
                         inputClass={twMerge(
                             cn(
                             'p-0 !pe-4 !ps-14 !flex !items-center !w-full !appearance-none !transition !duration-300 !ease-in-out !text-heading !text-sm focus:!outline-none focus:!ring-0 !border !border-border-base !rounded focus:!border-accent !h-12',
                             disabled
-                                ? `cursor-not-allowed !border-[#D4D8DD] !bg-[#EEF1F4] select-none`
+                                ? 'cursor-not-allowed !border-[#D4D8DD] !bg-[#EEF1F4] select-none'
                                 : '',
                             inputClassName,
                             ),
@@ -79,7 +83,9 @@ const PhoneNumberInput: React.FC<Props> = ({
             {note && <p className="mt-2 text-xs text-body">{note}</p>}
             {error && <p className="my-2 text-xs text-red-500 text-start">{error}</p>}
         </div>
-    )
-}
+    );
+});
 
-export default PhoneNumberInput
+PhoneNumberInput.displayName = 'PhoneNumberInput';
+
+export default PhoneNumberInput;

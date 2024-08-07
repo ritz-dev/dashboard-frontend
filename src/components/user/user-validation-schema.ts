@@ -18,8 +18,7 @@ export const userValidationSchema = yup.object().shape({
     imageUrl: yup
         .string()
         .url('Invalid URL format')
-        .matches(imageUrlRegExp,'Image URL must end with .jpg, .jpeg, .png, .gif, .bmp, or .webp')
-        .required('Image URL is required'),
+        .matches(imageUrlRegExp,'Image URL must end with .jpg, .jpeg, .png, .gif, .bmp, or .webp').nullable(),
     role: yup.string().required('Role is required'),
     phoneNumber: yup
           .string()

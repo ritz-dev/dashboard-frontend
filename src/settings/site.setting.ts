@@ -86,31 +86,6 @@ export const siteSettings = {
               },
             ]
           },
-          shop: {
-            href: '',
-            label: 'shop-management',
-            icon: 'ShoppingIcon',
-            childMenu: [
-              {
-                href: '',
-                label: 'Item-shops',
-                icon: 'ShopIcon',
-                childMenu: [
-                  {
-                    href: Routes.shop.list,
-                    label: 'All-shops',
-                    icon: 'MyShopIcon',
-                  },
-                  {
-                    href: Routes.shop.create,
-                    label: 'Add-all-shops',
-                    icon: 'ShopIcon',
-                  },
-                ],
-              },
-            ],
-          },
-        
         }
     }
 }
